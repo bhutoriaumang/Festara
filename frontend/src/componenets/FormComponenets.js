@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
 
 export const ColorButton = styled(Button)(({ theme }) => ({
-  color: "#e84c3c",
+  color: "#FF5858",
   fontWeight: theme.typography.fontWeightBold,
   backgroundColor: "white",
   "&:hover": {
