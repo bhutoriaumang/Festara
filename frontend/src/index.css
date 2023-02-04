@@ -15,7 +15,7 @@
 }
 
 .left-reg-page{
-  height: 100vh;
+  height: 80vh;
   width: 50vw;
 }
 
@@ -26,7 +26,7 @@
   padding: 10vh;
 }
 
-img{
+.left-reg-page img{
   width: 100%;
   height: 100vh;
   object-fit: cover;
@@ -55,8 +55,212 @@ img{
   height: 40vh;
 }
 
+.home-page {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 5vw;
+}
+
+
+.home-page-header{
+  grid-column: 1/3;
+  font-size: 5vh;
+  background-color: black;
+  color: #FF5858;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid white;
+  padding: 1vw;
+}
+
+.home-page-header img{
+  height: 10vh;
+  margin-right: 1vw;
+}
+
+.events{
+  height: 75vh;
+  margin-inline: 2vw;
+  overflow: scroll;
+}
+
+.event-card{
+  background: #fff;
+  border-radius: 4px;
+  height: 22vh;
+  margin-bottom: 2vw;
+  padding: 0px;
+  position: relative;
+  box-shadow: 0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03);
+  transition: all ease 500ms;
+  display: grid;
+  grid-template-columns: 75% 12.5% 12.5%;
+  grid-template-rows: 35% 40% 25%;
+  border: 1px solid black;
+}
+
+.event-card:hover {
+  transform: scale(1.03);
+  /* transition: 0.5s; */
+  box-shadow: 0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12), 0 8px 32px -8px hsla(0, 0%, 0%, 0.14), 0 -6px 32px -6px hsla(0, 0%, 0%, 0.02);
+}
+
+.event-card-header, .event-form-header{
+  grid-column: 1/4;
+  grid-row: 1/2;
+  background-color: black;
+  color: #FF5858;
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #FF5858;
+}
+
+.event-card-header h2, .event-form-header h2{
+  margin: 1vw;
+}
+
+.event-card-body{
+  grid-column: 1/2;
+  grid-row: 2/5;
+  margin: 1vw;
+  margin-top: 0;
+  display: -webkit-box;
+  /* line-height: 1; */
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid black;
+  max-width: 30vw;
+  padding-right: 1vw;
+}
+
+.event-card-info{
+  grid-column: 2/4;
+  grid-row: 2/3;
+  margin: 0;
+}
+
+.event-card-info p{
+  margin-bottom: 0px;
+}
+
+.event-card-update{
+  grid-column: 2/3;
+  grid-row: 3/4;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.event-card-delete{
+  grid-column: 3/4;
+  grid-row: 3/4;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.icon:hover{
+  transform: scale(1.3);
+  transition: ease-in-out 0.3s;
+  box-shadow: 0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12), 0 8px 32px -8px hsla(0, 0%, 0%, 0.14), 0 -6px 32px -6px hsla(0, 0%, 0%, 0.02);
+}
+
+.event-card form{
+  grid-column: 1/4;
+  grid-row: 1/5;
+  display: grid;
+  grid-template-columns: 75% 12.5% 12.5%;
+  grid-template-rows: 35% 40% 25%;
+}
+
+.event-card input,textarea{
+  margin: 0px;
+  width: 90%;
+}
+
+.update-title{
+  grid-column: 1/2;
+  grid-row: 1/2;
+  width: 90%;
+  margin: auto;
+}
+
+.update-description{
+  grid-column: 1/2;
+  grid-row: 2/5;
+  width: 90%;
+  margin: auto;
+}
+
+.update-timing{
+  grid-column: 2/4;
+  grid-row: 1/3;
+  width: 90%;
+  margin: auto;
+}
+
+.event-card button{
+  grid-column: 2/4;
+  grid-row: 2/4;
+  width: 90%;
+  margin: auto;
+  background-color: #FF5858;
+  color: black;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+  height: 20%;
+}
+
+
+.event-form{
+  background: #fff;
+  border-radius: 4px;
+  height: 50vh;
+  width: 40vw;
+  margin-inline: 2vw ;
+  padding-bottom: 3vh;
+  position: relative;
+  box-shadow: 0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03);
+  transition: all ease 500ms;
+}
+
+.event-form form{
+  width: 80%;
+  margin: auto;
+}
+
+.event-form label, input, textarea {
+  margin-top: 3vh;
+  display: block;
+  font-family: inherit;
+}
+.event-form input, textarea {
+  padding: 1vh;
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.event-form button {
+  background: #FF5858;
+  width: 100%;
+  color: black;
+  padding: 1vh;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1.5vh;
+}
+
 body {
   margin: 0;
+  background-color: #FF5858;
   font-family: 'SansitaSwashedRegular';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

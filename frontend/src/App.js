@@ -2,9 +2,9 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
 } from "react-router-dom";
 import LandingPage from './LandingPage';
+import HomePage from './HomePage';
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path='/' element={<LandingPage/>} />
+          <Route path='/home' element={<HomePage/>} />
         </Routes>
       </div>
     </Router>
