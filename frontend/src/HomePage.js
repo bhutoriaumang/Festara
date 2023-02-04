@@ -25,12 +25,14 @@ const HomePage = () => {
             </div>
           Festara 2023
         </div>
-        <div className="events">
-            {events && events.map((event)=>(
-                <EventCard key={event._id} event={event} />
-            )) }
+        <div className="left-home-page">
+          <div className="events">
+              {events && events.map((event)=>(
+                  <EventCard key={event._id} event={event} />
+              )) }
+          </div>
         </div>
-        <div className="eventForm">
+        <div className="right-home-page">
           <EventForm />
         </div>
     </div>

@@ -19,7 +19,7 @@ export const eventsReducer = (state,action) => {
             }
         case "UPDATE_EVENT":
             return {
-                events: [action.payload, ...state.events.filter(e => e._id !== action.payload._id)]
+                events: [action.payload, ...state.events.filter(e => e._id !== action.payload._id)].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt))
             }
         default:
             return state
