@@ -13,7 +13,7 @@ const EventCard = ({event})=>{
     const [timing,setTiming] = useState(event.timing)
     const { user, isAdmin, dispatch: authDispatch } = useAuthContext()
     const isRegistered = user.events.includes(event._id)
-
+    console.log(isRegistered,user.events)
 
 
     const handleRegister = async () => {
@@ -36,6 +36,24 @@ const EventCard = ({event})=>{
 
         if(response.ok){
             authDispatch({type:"UPDATE_USER",payload: json})
+            const participants = [...event.participants,user.email]
+            const x2 = {title,description,timing,participants}
+            const response2 = await fetch('/home/api/events/'+event._id,{
+                method: 'PATCH',
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify(x2),
+            })
+            const json2 = await response2.json()
+            if(response2.ok){
+                json2["title"] = title
+                json2["description"] = description
+                json2["timing"] = timing
+                json2["participants"] = participants
+                dispatch({type:"UPDATE_EVENT",payload: json2})
+            }
             alert("Registered for event")
         }
     }
@@ -74,7 +92,7 @@ const EventCard = ({event})=>{
             method: 'PATCH',
             body: JSON.stringify(x),
             headers: {
-                'Content-Tyoe': 'applicaiton/json',
+                'Content-type': 'application/json; charset=UTF-8',
                 'Authorization': `Bearer ${user.token}`
             }
         })
@@ -100,7 +118,7 @@ const EventCard = ({event})=>{
                     <span>{event.description}</span>
                 </div>
                 <div className="event-card-info">
-                    <span>No of seats left : {event.participants}</span>
+                    <span>No of seats left : {60 - event.participants.length}</span>
                     <br /><br />
                     <span>{formatDistanceToNow(new Date(event.timing), { addSuffix: true })}</span>
                 </div>

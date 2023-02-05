@@ -18,10 +18,7 @@ const eventSchema = Schema({
         required: true
     },
     participants: {
-        type: Number,
-        min: 0,
-        max: 60,
-        required: true
+        type: [String],
     }
 }, { timestamps : true })
 

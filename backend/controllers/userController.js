@@ -35,8 +35,10 @@ const registerUser = async (req,res) => {
         const user = await User.register(name,email,password)
 
         const token = createToken(user._id)
+        const events = user.events
+        let isAdmin = false
 
-        res.status(200).json({email,token})
+        res.status(200).json({name,email,events,isAdmin,token})
         
     } catch (error) {
         res.status(400).json({error: error.message})

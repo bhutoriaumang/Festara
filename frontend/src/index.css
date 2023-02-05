@@ -220,7 +220,6 @@ button:active{
 .event-card-info{
   grid-column: 2/4;
   grid-row: 2/3;
-  text-align: center;
   margin-right: 1vw;
 }
 

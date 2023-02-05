@@ -21,10 +21,10 @@ const getEvent = async (req,res)=>{
 }
 
 const createEvent = async (req,res)=>{
-    const { title,description,timing,participants } = req.body
+    const { title,description,timing } = req.body
 
     try{
-        const event = await Event.create({title,description,timing,participants})
+        const event = await Event.create({title,description,timing})
         res.status(200).json(event)
     }catch(error){
         return res.status(404).json({error: error.message})
@@ -47,6 +47,7 @@ const deleteEvent = async (req,res)=>{
 
 const updateEvent = async (req,res)=>{
     const { id } = req.params
+    console.log(req.body)
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({error: 'Invalid ID'})
     }
