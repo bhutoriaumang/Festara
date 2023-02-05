@@ -13,7 +13,14 @@ const loginUser = async (req,res) => {
 
         const token = createToken(user._id)
 
-        res.status(200).json({email,token})
+        const name = user.name
+        const events = user.events
+        let isAdmin = false
+
+        if(email == process.env.ADMIN)
+            isAdmin = true
+
+        res.status(200).json({name,email,events,isAdmin,token})
 
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -36,4 +43,18 @@ const registerUser = async (req,res) => {
     }
 }
 
-module.exports = { loginUser, registerUser }
+const updateUserEvents = async (req,res) => {
+    console.log(req.body)
+    const { email, event_id } = req.body
+
+    try {
+        let user = await User.updateOne({email: email}, {$push: {events: event_id}})
+        user = await User.findOne({email: email})
+        res.status(200).json({user})
+        
+    }catch(error){
+        res.status(400).json({error: error.message})
+    }
+}
+
+module.exports = { loginUser, registerUser, updateUserEvents }

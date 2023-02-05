@@ -1,37 +1,38 @@
 import { useState } from 'react';
 import { useAuthContext } from './useAuthContext';
 
-export const useRegister = () => {
+export const useLogin = () => {
     const [error,setError] = useState(null)
     const [loading,setLoading] = useState(null)
     const { dispatch } = useAuthContext()
 
-    const register = async (name,email,password) => {
+    const login = async (email,password) => {
         setLoading(true)
         setError(null)
 
-        const response = await fetch('/home/api/user/register',{
+        const response = await fetch('/home/api/user/login',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({name,email,password})
+            body: JSON.stringify({email,password})
         })
 
         const json = await response.json()
 
         if(!response.ok){
-            console.log(json.error,"ERROR")
             setLoading(false)
             setError(json.error)
         }
         if(response.ok){
             localStorage.setItem('user',JSON.stringify(json))
-            dispatch({
-                type: 'LOGIN',
-                payload: json
-            })
+            if(json.isAdmin==false){
+                dispatch({type: 'LOGIN', payload: json})
+            }
+            else{
+                dispatch({type: 'LOGIN_ADMIN', payload: json})
+            }
             setLoading(false)
         }
     }
 
-    return { register,loading,error }
+    return { login,loading,error }
 }

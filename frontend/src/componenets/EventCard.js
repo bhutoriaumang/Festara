@@ -2,6 +2,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEventsContext } from '../hooks/useEventsContext'
 import { FaTrashAlt,FaPencilAlt } from 'react-icons/fa'
 import { useState } from 'react'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const EventCard = ({event})=>{
 
@@ -10,6 +11,34 @@ const EventCard = ({event})=>{
     const [title,setTitle] = useState(event.title)
     const [description,setDescription] = useState(event.description)
     const [timing,setTiming] = useState(event.timing)
+    const { user, isAdmin, dispatch: authDispatch } = useAuthContext()
+    const isRegistered = user.events.includes(event._id)
+
+
+
+    const handleRegister = async () => {
+        console.log(user,event._id)
+
+        if(!user)
+            return
+
+        const email = user.email
+        const event_id = event._id
+        const x = {email,event_id}
+
+        const response = await fetch('/home/api/user/update',{
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(x),
+        })
+
+        const json = await response.json()
+
+        if(response.ok){
+            authDispatch({type:"UPDATE_USER",payload: json})
+            alert("Registered for event")
+        }
+    }
 
     const handleUpdate = () => {
         var card = document.getElementById(event._id);
@@ -17,8 +46,15 @@ const EventCard = ({event})=>{
     }
 
     const handleDelete = async () => {
+
+        if(!user)
+            return
+
         const response = await fetch('/home/api/events/'+event._id,{
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
         const json = await response.json()
         if(response.ok){
@@ -28,13 +64,18 @@ const EventCard = ({event})=>{
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if(!user)
+            return
+
         const participants = event.participants
         const x = {title,description,timing,participants}
         const response = await fetch('/home/api/events/'+event._id,{
             method: 'PATCH',
             body: JSON.stringify(x),
             headers: {
-                'Content-Tyoe': 'applicaiton/json'
+                'Content-Tyoe': 'applicaiton/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
         const json = await response.json()
@@ -56,18 +97,24 @@ const EventCard = ({event})=>{
                     <h2>{event.title}</h2>
                 </div>
                 <div className="event-card-body">
-                    <p>{event.description.substring(0,370)}</p>
+                    <span>{event.description}</span>
                 </div>
                 <div className="event-card-info">
-                    <p>No of seats left : {event.participants}</p>
-                    <p>{formatDistanceToNow(new Date(event.timing), { addSuffix: true })}</p>
+                    <span>No of seats left : {event.participants}</span>
+                    <br /><br />
+                    <span>{formatDistanceToNow(new Date(event.timing), { addSuffix: true })}</span>
                 </div>
-                <div className="event-card-update">
+                { isAdmin && <div className="event-card-update">
                     <FaPencilAlt className="icon" size="20%" onClick={handleUpdate}/>
-                </div>
-                <div className="event-card-delete">
+                </div>}
+                { isAdmin && <div className="event-card-delete">
                     <FaTrashAlt className="icon" size="20%" onClick={handleDelete}/>
-                </div>
+                </div>}
+                { !isAdmin && 
+                    <div className="event-card-register-event">
+                        <button className="btn btn-primary" onClick={handleRegister} disabled={isRegistered} >REGISTER</button>
+                    </div>
+                }
             </div>
             <div className='event-card-face event-card-back'>
                 <div className="update-title">
@@ -80,7 +127,7 @@ const EventCard = ({event})=>{
                 </div>
                 <div className="update-timing">
                     <label>Enter Date and Time of event:</label>
-                    <input type="datetime-local" name="date" id="date" step="1" value={timing.substring(0,timing.length-1)}  onChange={(e)=>setTiming(e.target.value)}/>
+                    <input type="datetime-local" name="date" id="date" value={timing.substring(0,timing.length-1)}  onChange={(e)=>setTiming(e.target.value+'Z')}/>
                 </div>
                 <button onClick={handleSubmit} className="update-submit"> SUBMIT </button>
                 <button onClick={handleUpdate} className="update-cancel"> CANCEL </button>

@@ -18,6 +18,9 @@ const userSchema = Schema({
         type: String,
         required: true
     },
+    events: {
+        type: [String],
+    }
 }, { timestamps : true })
 
 userSchema.statics.register = async function (name, email, password)  {

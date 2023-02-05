@@ -14,20 +14,17 @@ const Registration = () => {
     const handleSubmit = async ()=>{
         console.log(name,emailId,password)
         await register(name,emailId,password)
-        navigate("/home")
+        console.log(error)
     }
 
     return(
-        <>
-            { !loading && 
-                <div className="registration">
-                    <CssTextField label="Name" id="name-field-1" variant="standard" sx={{ width: '40vw' }} value={name} onChange={(e)=>setName(e.target.value)}/>
-                    <CssTextField label="Email Id" id="email-field-1" variant="standard" sx={{ width: '40vw', marginTop: '3vh', marginBottom: '3vh' }} type='email' value={emailId} onChange={(e)=>setEmailId(e.target.value)}/>
-                    <CssTextField label="Password" id="password-field-1" variant="standard" sx={{ width: '40vw' }} type='password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
-                    <ColorButton variant="contained" sx={{ width: '30vw', marginLeft: '5vw', marginTop: '8vh' }} onClick={handleSubmit}>SUBMIT</ColorButton>
-                </div>
-            }
-        </>
+        <div className="registration">
+            <CssTextField label="Name" id="name-field-1" variant="standard" sx={{ width: '40vw' }} value={name} onChange={(e)=>setName(e.target.value)}/>
+            <CssTextField label="Email Id" id="email-field-1" variant="standard" sx={{ width: '40vw', marginTop: '3vh', marginBottom: '3vh' }} type='email' value={emailId} onChange={(e)=>setEmailId(e.target.value)}/>
+            <CssTextField label="Password" id="password-field-1" variant="standard" sx={{ width: '40vw' }} type='password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
+            <ColorButton variant="contained" sx={{ width: '30vw', marginLeft: '5vw', marginTop: '8vh' }} onClick={handleSubmit}>SUBMIT</ColorButton>
+            { error && <div className="error">{error}</div> }
+        </div>
     );
 }
 

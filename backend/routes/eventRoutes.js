@@ -1,7 +1,10 @@
 const express = require('express')
 const { getEvent,getEvents,createEvent,deleteEvent,updateEvent } = require('../controllers/eventController')
+const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
+
+router.use(requireAuth)
 
 router.get('/', getEvents)
 router.get('/:id',getEvent)
